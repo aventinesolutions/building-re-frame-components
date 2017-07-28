@@ -13,10 +13,19 @@
     (fn []
       [:div @s])))
 
+(defn panel [title child]
+  (let [s (reagent/atom {:open false})]
+    (fn [title child]
+      [:div
+       [:div
+        {:on-click #(swap! s update :open not)}
+        title]
+       [:div (if (:open @s)
+               child)]])))
+
 (defn ui []
   [:div
-   [:h1 "Counting up:"]
-   [example-component]])
+     [panel "Frimmel" [example-component]]])
 
 (when-some [el (js/document.getElementById "collapsible-panel--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
