@@ -16,15 +16,18 @@
 (defn panel [title child]
   (let [s (reagent/atom {:open false})]
     (fn [title child]
-      [:div
+      (let [child-height (:child-height @s)]
+        [:div
        [:div
         {:on-click #(swap! s update :open not)}
         title]
-       [:div {:style {:height (if (:open @s)
-                                "auto"
+       [:div {:style {:max-height (if (:open @s)
+                                child-height
                                 0)
+                      :transition "max-height 0.8s"
                       :overflow "hidden"}}
-              child]])))
+        [:div {:ref #(when %
+                       (swap! s assoc :child-height (+-clientHeight %)))} child]]]))))
 
 (defn ui []
   [:div
