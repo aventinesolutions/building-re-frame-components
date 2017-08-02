@@ -25,7 +25,8 @@
                 ;; the presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel {:on-jsload "building-re-frame-components.core/on-js-reload"}
+                :figwheel {:on-jsload "building-re-frame-components.core/on-js-reload"
+                           :open-urls ["http://localhost:3449/index.html"]}
 
                 :compiler {:main building-re-frame-components.core
                            :asset-path "/js/compiled/out"
