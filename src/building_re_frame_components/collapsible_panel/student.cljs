@@ -19,15 +19,20 @@
       (let [child-height (:child-height @s)]
         [:div
        [:div
-        {:on-click #(swap! s update :open not)}
+        {:on-click #(swap! s update :open not)
+         :style {:background-color "#ddd"
+                 :padding "0 1em"}}
         title]
        [:div {:style {:max-height (if (:open @s)
                                 child-height
                                 0)
                       :transition "max-height 0.8s"
                       :overflow "hidden"}}
-        [:div {:ref #(when %
-                       (swap! s assoc :child-height (+-clientHeight %)))} child]]]))))
+        [:div
+         {:ref #(when %
+                  (swap! s assoc :child-height (+-clientHeight %)))
+          :style {:background-color "#eee"
+                  :padding "0 1em"}} child]]]))))
 
 (defn ui []
   [:div
