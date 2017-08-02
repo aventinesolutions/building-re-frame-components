@@ -20,8 +20,11 @@
        [:div
         {:on-click #(swap! s update :open not)}
         title]
-       [:div (if (:open @s)
-               child)]])))
+       [:div {:style {:height (if (:open @s)
+                                "auto"
+                                0)
+                      :overflow "hidden"}}
+              child]])))
 
 (defn ui []
   [:div
