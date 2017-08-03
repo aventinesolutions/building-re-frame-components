@@ -26,7 +26,7 @@
 (defn panel [id title child]
   (let [s (reagent/atom {})]
     (fn [id title child]
-      (let [open? @(rs/subscribe [:panel/state id])
+      (let [open? @(rf/subscribe [:panel/state id])
             child-height (:child-height @s)]
         [:div
        [:div
