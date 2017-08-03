@@ -18,12 +18,18 @@
    {:tables {:new-hope {:header (first data)
                         :rows (vec (rest data))}}}))
 
+(rf/reg-sub
+ :table
+ (fn [db [_ key]]
+   (get-in db [:tables key])))
+
 (defn ui []
   [:div
-   [:table {:style {:font-size "80%"}}
-    [:tr (for [h (first data)] [:th h])]
-    (for [row (rest data)]
-      [:tr (for [v row] [:td v])])]])
+   (let [table @(rf/subscribe [:table :new-hope])]
+     [:table {:style {:font-size "80%"}}
+      [:tr (for [h (:header table)] [:th h])]
+      (for [row (:rows table)]
+        [:tr (for [v row] [:td v])])])])
 
 (when-some [el (js/document.getElementById "sortable-table--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
