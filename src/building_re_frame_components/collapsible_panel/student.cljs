@@ -16,14 +16,17 @@
 (defn panel [title child]
   (let [s (reagent/atom {:open false})]
     (fn [title child]
-      (let [child-height (:child-height @s)]
+      (let [open? (:open @s)
+            child-height (:child-height @s)]
         [:div
        [:div
         {:on-click #(swap! s update :open not)
          :style {:background-color "#ddd"
                  :padding "0 1em"}}
+        [:div {:style {:float "right"}}
+         (if open? "+" "-")]
         title]
-       [:div {:style {:max-height (if (:open @s)
+       [:div {:style {:max-height (if open?
                                 child-height
                                 0)
                       :transition "max-height 0.8s"
