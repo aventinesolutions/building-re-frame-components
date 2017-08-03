@@ -30,7 +30,7 @@
                       :overflow "hidden"}}
         [:div
          {:ref #(when %
-                  (swap! s assoc :child-height (+-clientHeight %)))
+                  (swap! s assoc :child-height (.-clientHeight %)))
           :style {:background-color "#eee"
                   :padding "0 1em"}} child]]]))))
 
