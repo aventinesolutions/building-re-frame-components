@@ -15,7 +15,8 @@
 (rf/reg-event-db
  :initialize
  (fn [db _]
-   {}))
+   {:tables {:new-hope {:header (first data)
+                        :rows (vec (rest data))}}}))
 
 (defn ui []
   [:div
