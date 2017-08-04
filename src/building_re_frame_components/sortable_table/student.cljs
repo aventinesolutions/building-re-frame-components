@@ -27,7 +27,16 @@
   (let [table @(rf/subscribe [:table table-key])]
      [:table {:style {:font-size "80%"}}
       [:tr (for [h (:header table)]
-             [:th h "▲" "▼"])]
+             [:th {:style {:line-height "1em"
+                           :padding-right "1em"}}
+              [:div {:style {:display :inline-block}} h]
+              [:div {:style {:display :inline-block
+                             :vertical-align :middle
+                             :font-size "80%"
+                             :margin-left "0.33333em"
+                             :line-height "1em"}}
+               [:div "▲"]
+               [:div "▼"]]])]
       (for [row (:rows table)]
         [:tr (for [v row] [:td v])])]))
 
