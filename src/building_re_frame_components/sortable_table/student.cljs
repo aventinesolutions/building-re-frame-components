@@ -28,9 +28,9 @@
     (fn [table-key]
       (let [table @(rf/subscribe [:table table-key])
             key (:sort-key @s)
-            rows (if key
-                  (sort-by #(nth % key) (:rows table))
-                  (:rows table))]
+            rows (cond->> (:rows table)
+                   key (sort-by #(nth % key))
+                   (= :ascending (:sort-direction @s)) reverse)]
         [:div (pr-str @s)
          [:table {:style {:font-size "80%"}}
           [:tr (for [[i h] (map vector (range) (:header table))]
