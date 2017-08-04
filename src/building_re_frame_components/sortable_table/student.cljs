@@ -31,24 +31,28 @@
             direction (:sort-direction @s)
             rows (cond->> (:rows table)
                    key (sort-by #(nth % key))
-                   (= :ascending direction) reverse)]
+                   (= :ascending direction) reverse)
+            sorts [key direction]]
         [:div (pr-str @s)
          [:table {:style {:font-size "80%"}}
           [:tr (for [[i h] (map vector (range) (:header table))]
                  [:th {:style {:line-height "1em"
-                               :padding-right "1em"}}
+                               :padding-right "1em"}
+                       :on-click #(cond
+                                    (= [i :descending] sorts)
+                                    (swap! s assoc :sort-direction :ascending)
+                                    (= [i :ascending] sorts)
+                                    (swap! s dissoc :sort-key :sort-direction)
+                                    :else
+                                    (swap! s assoc :sort-key i :sort-direction :descending))}
                   [:div {:style {:display :inline-block}} h]
                   [:div {:style {:display :inline-block
                                  :vertical-align :middle
                                  :font-size "80%"
                                  :margin-left "0.33333em"
                                  :line-height "1em"}}
-                   [:div {:on-click
-                          #(swap! s assoc :sort-key i :sort-direction :ascending)}
-                    "▲"]
-                   [:div {:on-click
-                          #(swap! s assoc :sort-key i :sort-direction :descending)}
-                    "▼"]]])]
+                   [:div "▲"]
+                   [:div "▼"]]])]
           (for [row rows]
             [:tr (for [v row] [:td v])])]]))))
 
