@@ -60,7 +60,7 @@
    (get-in db [:tables key])))
 
 (defn sortable-table [table-key]
-  (let [table @(rf/subscribe [:table :new-hope])]
+  (let [table @(rf/subscribe [:table table-key])]
      [:table {:style {:font-size "80%"}}
       [:tr (for [h (:header table)] [:th h])]
       (for [row (:rows table)]
