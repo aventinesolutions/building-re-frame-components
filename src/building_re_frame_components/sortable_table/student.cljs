@@ -62,7 +62,11 @@
 (defn sortable-table [table-key]
   (let [s (reagent/atom {})]
     (fn [table-key]
-      (let [table @(rf/subscribe [:table table-key])]
+      (let [table @(rf/subscribe [:table table-key])
+            key (:sort-key @s)
+            rows (if key
+                  (sort-by #(nth % key) (:rows table))
+                  (:rows table))]
         [:div (pr-str @s)
          [:table {:style {:font-size "80%"}}
           [:tr (for [[i h] (map vector (range) (:header table))]
@@ -80,7 +84,7 @@
                    [:div {:on-click
                           #(swap! s assoc :sort-key i :sort-direction :descending)}
                     "▼"]]])]
-          (for [row (:rows table)]
+          (for [row rows]
             [:tr (for [v row] [:td v])])]]))))
 
 (defn ui []
