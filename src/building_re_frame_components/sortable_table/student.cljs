@@ -23,13 +23,16 @@
  (fn [db [_ key]]
    (get-in db [:tables key])))
 
-(defn ui []
-  [:div
-   (let [table @(rf/subscribe [:table :new-hope])]
+(defn sortable-table [table-key]
+  (let [table @(rf/subscribe [:table :new-hope])]
      [:table {:style {:font-size "80%"}}
       [:tr (for [h (:header table)] [:th h])]
       (for [row (:rows table)]
-        [:tr (for [v row] [:td v])])])])
+        [:tr (for [v row] [:td v])])]))
+
+(defn ui []
+  [:div
+   [sortable-table :new-hope]])
 
 (when-some [el (js/document.getElementById "sortable-table--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
