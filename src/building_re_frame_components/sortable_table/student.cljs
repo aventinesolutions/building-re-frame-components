@@ -51,8 +51,8 @@
                                  :font-size "80%"
                                  :margin-left "0.33333em"
                                  :line-height "1em"}}
-                   [:div "▲"]
-                   [:div "▼"]]])]
+                   [:div {:style {:color (if (= [i :descending] sorts) :black "#aaa")}} "▲"]
+                   [:div {:style {:color (if (= [i :ascending] sorts) :black "#aaa")}} "▼"]]])]
           (for [row rows]
             [:tr (for [v row] [:td v])])]]))))
 
