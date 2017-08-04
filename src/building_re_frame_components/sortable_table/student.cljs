@@ -65,7 +65,7 @@
       (let [table @(rf/subscribe [:table table-key])]
         [:div (pr-str @s)
          [:table {:style {:font-size "80%"}}
-          [:tr (for [h (:header table)]
+          [:tr (for [[i h] (map vector (range) (:header table))]
                  [:th {:style {:line-height "1em"
                                :padding-right "1em"}}
                   [:div {:style {:display :inline-block}} h]
@@ -74,8 +74,12 @@
                                  :font-size "80%"
                                  :margin-left "0.33333em"
                                  :line-height "1em"}}
-                   [:div "▲"]
-                   [:div "▼"]]])]
+                   [:div {:on-click
+                          #(swap! s assoc :sort-key i :sort-direction :ascending)}
+                    "▲"]
+                   [:div {:on-click
+                          #(swap! s assoc :sort-key i :sort-direction :descending)}
+                    "▼"]]])]
           (for [row (:rows table)]
             [:tr (for [v row] [:td v])])]]))))
 
