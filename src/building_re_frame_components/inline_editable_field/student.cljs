@@ -36,7 +36,12 @@
           [:input {:type :text :value (:text @s)
                    :on-change #(swap! s assoc
                                       :text (->> % .-target .-value))}]
-          [:button "Save"]]
+          [:button "Save"]
+          [:button {:on-click
+                    #(do
+                       (.preventDefault %)
+                       (swap! s dissoc :editing?))}
+           "Cancel"]]
          [:span {:on-click #(swap! s assoc
                                    :editing? true
                                    :text text)}
