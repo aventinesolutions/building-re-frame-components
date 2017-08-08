@@ -14,12 +14,18 @@
   (fn [db _]
     (:movies db)))
 
+(defn inline-editor [text]
+  (let [s (reagent/atom {})]
+    (fn [text]
+      [:span {:on-click #(swap! s assoc :editing? true)}
+       text])))
+
 (defn ui []
   [:div
    (for [[movie-id movie] @(rf/subscribe [:movies])]
      [:div {:key movie-id}
-      [:h3 (:title movie)]
-      [:div (:description movie)]])])
+      [:h3 [inline-editor (:title movie)]]
+      [:div [inline-editor (:description movie)]]])])
 
 (when-some [el (js/document.getElementById "inline-editable-field--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
