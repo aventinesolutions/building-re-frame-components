@@ -45,7 +45,7 @@
          [:span {:on-click #(swap! s assoc
                                    :editing? true
                                    :text text)}
-               text]))))
+               text [:sup "✎"]]))))
 
 (defn ui []
   [:div
