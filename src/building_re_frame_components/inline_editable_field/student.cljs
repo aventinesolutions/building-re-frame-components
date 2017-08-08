@@ -27,8 +27,7 @@
 (defn inline-editor [text on-change]
   (let [s (reagent/atom {})]
     (fn [text on-change]
-      [:span (pr-str @s)
-       (if (:editing? @s)
+      (if (:editing? @s)
          [:form {:on-submit #(do
                                (.preventDefault %)
                                (swap! s dissoc :editing?)
@@ -40,7 +39,7 @@
          [:span {:on-click #(swap! s assoc
                                    :editing? true
                                    :text text)}
-               text])])))
+               text]))))
 
 (defn ui []
   [:div
