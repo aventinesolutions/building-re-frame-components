@@ -14,14 +14,19 @@
   (fn [db _]
     (:movies db)))
 
-(defn inline-editor [text]
+(defn inline-editor [text on-change]
   (let [s (reagent/atom {})]
-    (fn [text]
+    (fn [text on-change]
       [:span (pr-str @s)
        (if (:editing? @s)
-         [:input {:type :text :value (:text @s)
-                  :on-change #(swap! s assoc
-                                     :text (->> % .-target .-value))}]
+         [:form {:on-submit #(do
+                               (.preventDefault %)
+                               (swap! s dissoc :editing?)
+                               (when on-change
+                                 (on-change (:text @s))))}
+          [:input {:type :text :value (:text @s)
+                   :on-change #(swap! s assoc
+                                      :text (->> % .-target .-value))}]]
          [:span {:on-click #(swap! s assoc
                                    :editing? true
                                    :text text)}
