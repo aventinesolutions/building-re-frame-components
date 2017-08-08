@@ -19,8 +19,12 @@
     (fn [text]
       [:span (pr-str @s)
        (if (:editing? @s)
-         [:input {:type :text :value text}]
-         [:span {:on-click #(swap! s assoc :editing? true)}
+         [:input {:type :text :value (:text @s)
+                  :on-change #(swap! s assoc
+                                     :text (->> % .-target .-value))}]
+         [:span {:on-click #(swap! s assoc
+                                   :editing? true
+                                   :text text)}
                text])])))
 
 (defn ui []
