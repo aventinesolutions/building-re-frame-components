@@ -17,8 +17,11 @@
 (defn inline-editor [text]
   (let [s (reagent/atom {})]
     (fn [text]
-      [:span {:on-click #(swap! s assoc :editing? true)}
-       text])))
+      [:span (pr-str @s)
+       (if (:editing? @s)
+         [:input {:type :text :value text}]
+         [:span {:on-click #(swap! s assoc :editing? true)}
+               text])])))
 
 (defn ui []
   [:div
@@ -29,4 +32,4 @@
 
 (when-some [el (js/document.getElementById "inline-editable-field--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
-  (reagent/render [ui] el))
+  (defonce _render (reagent/render [ui] el)))
