@@ -15,8 +15,14 @@
  :expected
  (fn [db] (:expected db)))
 
+(rf/reg-event-db
+ :inc-actual (fn [db [_ x]] (update db :actual + x)))
+
+(defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
+
 (defn progress [done total]
-  [:div])
+  (let [percent (* 100 (/ done total))]
+    [:div percent]))
 
 (defn ui []
   [:div
