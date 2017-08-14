@@ -4,12 +4,25 @@
 
 (rf/reg-event-db
   :initialize
-  (fn [db _]
-    (select-keys db (filter #(= "teacher" (namespace %)) (keys db)))))
+  (fn [_ _]
+    {:actual 0 :expected 83}))
+
+(rf/reg-sub
+ :actual
+ (fn [db] (:actual db)))
+
+(rf/reg-sub
+ :expected
+ (fn [db] (:expected db)))
+
+(defn progress [done total]
+  [:div])
 
 (defn ui []
   [:div
-   "23.3%"])
+   @(rf/subscribe [:actual]) " / " @(rf/subscribe [:expected])
+   (progress @(rf/subscribe [:actual])
+             @(rf/subscribe [:expected]))])
 
 (when-some [el (js/document.getElementById "progress-bar--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
