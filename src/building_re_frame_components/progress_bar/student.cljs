@@ -16,7 +16,12 @@
  (fn [db] (:expected db)))
 
 (rf/reg-event-db
- :inc-actual (fn [db [_ x]] (update db :actual + x)))
+ :inc-actual
+ (fn [db [_ x]]
+   (let [new (+ x (:actual db))]
+     (if (>= new (:expected db))
+       (assoc db :actual (:expected db))
+       (assoc db :actual new)))))
 
 (defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
 
