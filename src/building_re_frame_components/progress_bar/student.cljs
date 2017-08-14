@@ -41,7 +41,9 @@
                      :bottom 0
                      :height "1.3333em"
                      :width percent
-                     :background-color :green}}]
+                     :background-color :green
+                     :overflow :hidden}}
+       [:div percent]]
       [:div {:style {:text-align :center}} percent]]]))
 
 (defn ui []
