@@ -23,6 +23,13 @@
        (assoc db :actual (:expected db))
        (assoc db :actual new)))))
 
+(rf/reg-event-db
+ :reset-expected
+ (fn [db [_ expected]]
+   (assoc db :expected expected :actual 0)))
+
+(rf/dispatch [:reset-expected 83])
+
 (defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
 
 (defn progress [done total]
