@@ -33,7 +33,7 @@
 (defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
 
 (defn progress [done total]
-  (let [percent (* 100 (/ done total))]
+  (let [percent (.toFixed (* 100 (/ done total)) 1)]
     [:div percent]))
 
 (defn ui []
