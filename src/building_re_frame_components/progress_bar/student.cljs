@@ -33,20 +33,22 @@
 (defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
 
 (defn progress [done total]
-  (let [percent (str (.toFixed (* 100 (/ done total)) 1) "%")]
-    [:div percent
-     [:div {:style {:position :relative}}
-      [:div {:style {:position :absolute
-                     :top 0
-                     :bottom 0
-                     :height "1.3333em"
-                     :width percent
-                     :background-color :green
-                     :overflow :hidden}}
-       [:div percent]]
-      [:div {:style {:text-align :center}}
-       [:span
-        percent]]]]))
+  (let [s (reagent/atom {})]
+    (fn [done total]
+      (let [percent (str (.toFixed (* 100 (/ done total)) 1) "%")]
+        [:div percent
+         [:div {:style {:position :relative :line-height "1.3em"}}
+          [:div {:style {:background-color :green 
+                         :top 0
+                         :bottom 0
+                         :transition "width 0.1s"
+                         :width percent
+                         :position :absolute
+                         :overflow :hidden}}
+           [:div percent]]
+          [:div {:style {:text-align :center}}
+           [:span {:ref #(swap! s assoc :left 0)}
+            percent]]]]))))
 
 (defn ui []
   [:div
