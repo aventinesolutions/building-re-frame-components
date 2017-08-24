@@ -57,7 +57,10 @@
 
 (defn ui []
   [:div
-   [sortable-table :new-hope]])
+   [:table {:style {:font-size "80%"}}
+    [:tr (for [h (first data)] [:th h])]
+    (for [row (rest data)]
+      [:tr (for [v row] [:td v])])]])
 
 (when-some [el (js/document.getElementById "sortable-table--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
