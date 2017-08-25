@@ -7,7 +7,7 @@
  (fn [_ _]
    {}))
 
-(defn password-validations []
+(def password-validations
   [["At least 12 characters"
     (fn [s]
       (>= (count s) 12))]])
@@ -15,13 +15,15 @@
 (defn password-box [pw]
   (let [s (reagent/atom {:value pw})]
     (fn []
-      (let [validations (for [[desc f] validations]
+      (let [validations (for [[desc f] password-validations]
                           [desc (f (:value @s))])
-            valid? (every? identity (map second validations))]
+            valid? (every? identity (map second validations))
+            color (if valid? "green" "red")]
        [:form
         (pr-str @s)
         [:input {:type (if (:show? @s) :text :password)
-                 :style {:width "100%"}
+                 :style {:width "100%"
+                         :border (str "1px solid " color)}
                  :value (:value @s)
                  :on-change #(swap! s assoc
                                     :value
