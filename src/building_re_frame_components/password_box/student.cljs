@@ -33,7 +33,9 @@
                          :on-change #(swap! s assoc
                                             :show?
                                             (-> % .-target .-checked))}]
-         " Show password?"]]))))
+         " Show password?"]
+        (for [[desc valid?] validations]
+          [:div desc])]))))
 
 (defn ui []
   [:div
