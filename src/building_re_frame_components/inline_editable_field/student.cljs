@@ -14,38 +14,11 @@
   (fn [db _]
     (:movies db)))
 
-(rf/reg-event-db
- :movie/title
- (fn [db [_ id title]]
-   (assoc-in db [:movies id :title] title)))
-
-(rf/reg-event-db
- :movie/description
- (fn [db [_ id description]]
-   (assoc-in db [:movies id :description] description)))
-
-(defn inline-editor [text on-change]
+(defn inline-editor [text]
   (let [s (reagent/atom {})]
-    (fn [text on-change]
-      (if (:editing? @s)
-         [:form {:on-submit #(do
-                               (.preventDefault %)
-                               (swap! s dissoc :editing?)
-                               (when on-change
-                                 (on-change (:text @s))))}
-          [:input {:type :text :value (:text @s)
-                   :on-change #(swap! s assoc
-                                      :text (-> % .-target .-value))}]
-          [:button "Save"]
-          [:button {:on-click
-                    #(do
-                       (.preventDefault %)
-                       (swap! s dissoc :editing?))}
-           "Cancel"]]
-         [:span {:on-click #(swap! s assoc
-                                   :editing? true
-                                   :text text)}
-               text [:sup "✎"]]))))
+    (fn [text]
+      [:span {:on-click #(swap! s assoc :editing? true)}
+       text])))
 
 (defn ui []
   [:div
