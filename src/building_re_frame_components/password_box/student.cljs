@@ -43,8 +43,9 @@
                                             (-> % .-target .-checked))}]
          " Show password?"]
         (for [[desc valid?] validations]
-          [:div {:style {:color (if valid? "green" "red")}}
-           desc])]))))
+          (when (:dirty? @s)
+            [:div {:style {:color (if valid? "green" "red")}}
+             desc]))]))))
 
 (defn ui []
   [:div
