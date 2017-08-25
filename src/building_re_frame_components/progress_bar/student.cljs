@@ -28,7 +28,7 @@
  (fn [db [_ expected]]
    (assoc db :expected expected :actual 0)))
 
-(rf/dispatch [:reset-expected 83])
+(rf/dispatch [:reset-expected 152])
 
 (defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
 
@@ -36,22 +36,24 @@
   (let [s (reagent/atom {})]
     (fn [done total]
       (let [percent (str (.toFixed (* 100 (/ done total)) 1) "%")]
-        [:div percent
-         [:div {:style {:position :relative
-                        :line-height "1.3em"}}
-          [:div {:style {:background-color :green 
-                         :top 0
-                         :bottom 0
-                         :transition "width 0.1s"
-                         :width percent
-                         :position :absolute
-                         :overflow :hidden}}
-           [:div percent]]
-          [:div {:style {:text-align :center}}
-           [:span {:ref #(if %
-                           (swap! s assoc :left (.-offsetLeft %))
-                           (swap! s assoc :left 0))}
-            percent]]]]))))
+        [:div {:style {:position :relative
+                       :line-height "1.3em"}}
+         [:div {:style {:background-color :green 
+                        :top 0
+                        :bottom 0
+                        :transition "width 0.1s"
+                        :width percent
+                        :position :absolute
+                        :overflow :hidden}}
+          [:span {:stye {:margin-left (:left @s)
+                         :color :white}}
+           percent]]
+         [:div {:style {:text-align :center}}
+          [:span
+           {:ref #(if %
+                    (swap! s assoc :left (.-offsetLeft %))
+                    (swap! s assoc :left 0))}
+           percent]]]))))
 
 (defn ui []
   [:div progress @(rf/subscribe [:actual]) @(rf/subscribe [:expected])])
@@ -59,3 +61,4 @@
 (when-some [el (js/document.getElementById "progress-bar--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
   (reagent/render [ui] el))
+
