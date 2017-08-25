@@ -17,7 +17,6 @@
  (fn [db _]
    {:tables {:new-hope {:header (first data)
                         :rows (vec (rest data))}}}))
-
 (rf/reg-sub
  :table
  (fn [db [_ key]]
