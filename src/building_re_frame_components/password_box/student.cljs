@@ -25,7 +25,7 @@
       (let [validations (for [[desc f] password-validations]
                           [desc (f (:value @s))])
             valid? (every? identity (map second validations))
-            color (if valid? "green" "red")]
+            color (when (:dirty? @s) (if valid? "green" "red"))]
        [:form
         (pr-str @s)
         [:input {:type (if (:show? @s) :text :password)
@@ -33,6 +33,7 @@
                          :border (str "1px solid " color)}
                  :value (:value @s)
                  :on-change #(swap! s assoc
+                                    :dirty? true
                                     :value
                                     (-> % .-target .-value))}]
         [:label [:input {:type :checkbox
