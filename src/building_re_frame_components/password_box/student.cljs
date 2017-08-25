@@ -10,12 +10,14 @@
 (defn password-box [pw]
   (let [s (reagent/atom {:value pw})]
     (fn []
-      [:input {:type :password
-               :style {:width "100%"}
-               :value (:value @s)
-               :on-change #(swap! s assoc
-                                  :value
-                                  (-> % .-target .-value))}])))
+      [:form
+       [:input {:type :password
+                :style {:width "100%"}
+                :value (:value @s)
+                :on-change #(swap! s assoc
+                                   :value
+                                   (-> % .-target .-value))}]
+       [:label [:input {:type :checkbox}] " Show password?"]])))
 
 (defn ui []
   [:div
