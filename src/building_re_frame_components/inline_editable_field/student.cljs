@@ -14,6 +14,11 @@
   (fn [db _]
     (:movies db)))
 
+(rf/reg-event-db
+ :movie/title
+ (fn [db [_ id title]]
+   (assoc-in db [:movies id :title] title)))
+
 (defn inline-editor [text on-change]
   (let [s (reagent/atom {})]
     (fn [text on-change]
@@ -39,8 +44,7 @@
      [:div {:key movie-id}
       [:h3 [inline-editor (:title movie)
             #(rf/dispatch [:movie/title movie-id %])]]
-      [:div [inline-editor (:description movie)
-             #(rf/dispatch [:movie/description movie-id %])]]])])
+      [:div [inline-editor (:description movie)]]])])
 
 (when-some [el (js/document.getElementById "inline-editable-field--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
