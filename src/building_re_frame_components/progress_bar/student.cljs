@@ -41,6 +41,7 @@
       (let [percent (str (.toFixed (* 100 (/ done total)) 1) "%")]
         [:div {:style {:position :relative
                        :line-height "1.3em"
+                       :background-color "#efe"
                        :border-radius 100}}
           [:div {:style {:background-color :green 
                          :top 0
