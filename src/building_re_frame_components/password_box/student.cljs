@@ -32,6 +32,7 @@
                  :style {:width "100%"
                          :border (str "1px solid " color)}
                  :value (:value @s)
+                 :on-focus #(swap! s assoc :focus? true)
                  :on-change #(swap! s assoc
                                     :dirty? true
                                     :value
@@ -43,8 +44,9 @@
                                             (-> % .-target .-checked))}]
          " Show password?"]
         (for [[desc valid?] validations]
-          (when (:dirty? @s)
-            [:div {:style {:color (if valid? "green" "red")}}
+          (when (:focus? @s)
+            [:div {:style {:color (when (:dirty? @s)
+                                    (if valid? "green" "red"))}}
              desc]))]))))
 
 (defn ui []
