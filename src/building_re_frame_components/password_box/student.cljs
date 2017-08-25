@@ -27,7 +27,7 @@
             valid? (every? identity (map second validations))
             color (when (:dirty? @s) (if valid? "green" "red"))]
        [:form
-        (pr-str @s)
+        [:label {:style {:color color}} "Password"]
         [:input {:type (if (:show? @s) :text :password)
                  :style {:width "100%"
                          :border (str "1px solid " color)}
