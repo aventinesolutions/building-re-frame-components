@@ -37,7 +37,8 @@
     (fn [done total]
       (let [percent (str (.toFixed (* 100 (/ done total)) 1) "%")]
         [:div percent
-         [:div {:style {:position :relative :line-height "1.3em"}}
+         [:div {:style {:position :relative
+                        :line-height "1.3em"}}
           [:div {:style {:background-color :green 
                          :top 0
                          :bottom 0
@@ -47,14 +48,13 @@
                          :overflow :hidden}}
            [:div percent]]
           [:div {:style {:text-align :center}}
-           [:span {:ref #(swap! s assoc :left 0)}
+           [:span {:ref #(if %
+                           (swap! s assoc :left (.-offsetLeft %))
+                           (swap! s assoc :left 0))}
             percent]]]]))))
 
 (defn ui []
-  [:div
-   @(rf/subscribe [:actual]) " / " @(rf/subscribe [:expected])
-   (progress @(rf/subscribe [:actual])
-             @(rf/subscribe [:expected]))])
+  [:div progress @(rf/subscribe [:actual]) @(rf/subscribe [:expected])])
 
 (when-some [el (js/document.getElementById "progress-bar--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
