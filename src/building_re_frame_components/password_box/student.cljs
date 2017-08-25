@@ -15,20 +15,23 @@
 (defn password-box [pw]
   (let [s (reagent/atom {:value pw})]
     (fn []
-      [:form
-       (pr-str @s)
-       [:input {:type (if (:show? @s) :text :password)
-                :style {:width "100%"}
-                :value (:value @s)
-                :on-change #(swap! s assoc
-                                   :value
-                                   (-> % .-target .-value))}]
-       [:label [:input {:type :checkbox
-                        :checked (:show? @s)
-                        :on-change #(swap! s assoc
-                                           :show?
-                                           (-> % .-target .-checked))}]
-        " Show password?"]])))
+      (let [validations (for [[desc f] validations]
+                          [desc (f (:value @s))])
+            valid? (every? identity (map second validations))]
+       [:form
+        (pr-str @s)
+        [:input {:type (if (:show? @s) :text :password)
+                 :style {:width "100%"}
+                 :value (:value @s)
+                 :on-change #(swap! s assoc
+                                    :value
+                                    (-> % .-target .-value))}]
+        [:label [:input {:type :checkbox
+                         :checked (:show? @s)
+                         :on-change #(swap! s assoc
+                                            :show?
+                                            (-> % .-target .-checked))}]
+         " Show password?"]]))))
 
 (defn ui []
   [:div
