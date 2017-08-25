@@ -47,7 +47,7 @@
           (when (:focus? @s)
             [:div {:style {:color (when (:dirty? @s)
                                     (if valid? "green" "red"))}}
-             desc]))]))))
+             (if valid? "✔ " "✘ ") desc]))]))))
 
 (defn ui []
   [:div
