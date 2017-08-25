@@ -12,7 +12,7 @@
     (fn []
       [:form
        (pr-str @s)
-       [:input {:type :password
+       [:input {:type (if (:show? @s) :text :password)
                 :style {:width "100%"}
                 :value (:value @s)
                 :on-change #(swap! s assoc
