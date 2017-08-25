@@ -39,8 +39,7 @@
   (let [s (reagent/atom {})]
     (fn [done total]
       (let [percent (str (.toFixed (* 100 (/ done total)) 1) "%")]
-        [:div [:div (pr-str @s)]
-         [:div {:style {:position :relative
+        [:div {:style {:position :relative
                         :line-height "1.3em"}}
          
           [:div {:style {:background-color :green 
@@ -58,7 +57,7 @@
             {:ref #(if %
                      (swap! s assoc :left (.-offsetLeft %))
                      (swap! s assoc :left 0))}
-            percent ]]]]))))
+            percent ]]]))))
 
 (defn ui []
   [:div [progress @(rf/subscribe [:actual]) @(rf/subscribe [:expected])]])
