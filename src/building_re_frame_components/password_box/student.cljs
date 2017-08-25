@@ -11,6 +11,7 @@
   (let [s (reagent/atom {:value pw})]
     (fn []
       [:input {:type :password
+               :style {:width "100%"}
                :value (:value @s)
                :on-change #(swap! s assoc
                                   :value
