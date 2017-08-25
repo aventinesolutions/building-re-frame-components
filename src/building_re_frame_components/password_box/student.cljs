@@ -7,9 +7,14 @@
  (fn [_ _]
    {}))
 
+(defn password-box [pw]
+  (let [s (reagent/atom {:value pw})]
+    (fn []
+      [:input {:type :password :value (:value @s)}])))
+
 (defn ui []
   [:div
-   [:input {:type :password :value "my-password"}]])
+   [password-box ""]])
 
 (when-some [el (js/document.getElementById "password-box--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
