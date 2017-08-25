@@ -7,6 +7,11 @@
  (fn [_ _]
    {}))
 
+(defn password-validations []
+  [["At least 12 characters"
+    (fn [s]
+      (>= (count s) 12))]])
+
 (defn password-box [pw]
   (let [s (reagent/atom {:value pw})]
     (fn []
