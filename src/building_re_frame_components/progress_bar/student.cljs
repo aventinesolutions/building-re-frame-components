@@ -31,7 +31,7 @@
  (fn [db [_ expected]]
    (assoc db :expected expected :actual 0)))
 
-(rf/dispatch [:reset-expected 152])
+(rf/dispatch [:reset-expected 64])
 
 (defonce _interval (js/setInterval #(rf/dispatch [:inc-actual 2.3]) 1000))
 
