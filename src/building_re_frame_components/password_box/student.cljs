@@ -10,7 +10,11 @@
 (defn password-box [pw]
   (let [s (reagent/atom {:value pw})]
     (fn []
-      [:input {:type :password :value (:value @s)}])))
+      [:input {:type :password
+               :value (:value @s)
+               :on-change #(swap! s assoc
+                                  :value
+                                  (-> % .-target .-value))}])))
 
 (defn ui []
   [:div
