@@ -11,13 +11,19 @@
   (let [s (reagent/atom {:value pw})]
     (fn []
       [:form
+       (pr-str @s)
        [:input {:type :password
                 :style {:width "100%"}
                 :value (:value @s)
                 :on-change #(swap! s assoc
                                    :value
                                    (-> % .-target .-value))}]
-       [:label [:input {:type :checkbox}] " Show password?"]])))
+       [:label [:input {:type :checkbox
+                        :checked (:show? @s)
+                        :on-change #(swap! s assoc
+                                           :show?
+                                           (-> % .-target .-checked))}]
+        " Show password?"]])))
 
 (defn ui []
   [:div
