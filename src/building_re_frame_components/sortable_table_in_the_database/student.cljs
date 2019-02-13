@@ -45,30 +45,28 @@
       [:table
        {:style {:font-size "80%"}}
        [:tr
-        (for [[i h] (map vector (range) (:header table))]
+        (for [[index header] (map vector (range) (:header table))]
           [:th
            {:on-click #(cond
-                        (= [i :ascending] sorts)
+                        (= [index :ascending] sorts)
                         (rf/dispatch :table-remove-sort table-key)
-                        (= [i :descending] sorts)
-                        (rf/dispatch :table-sort-by table-key i :ascending)
+                        (= [index :descending] sorts)
+                        (rf/dispatch :table-sort-by table-key index :ascending)
                         :else
-                        (swap! table assoc
-                               :sort-key       i
-                               :sort-direction :descending))}
+                        (rf/dispatch :table-sort-by table-key index :descending))}
            [:div {:style {:display :inline-block}}
-            h]
+            header]
            [:div
             {:style {:display     :inline-block
                      :line-height :1em
                      :font-size   :60%}}
             [:div
-             {:style {:color (if (= [i :descending] sorts)
+             {:style {:color (if (= [index :descending] sorts)
                                :black
                                "#aaa")}}
              "▲"]
             [:div
-             {:style {:color (if (= [i :ascending] sorts)
+             {:style {:color (if (= [index :ascending] sorts)
                                :black
                                "#aaa")}}
              "▼"]]])]
