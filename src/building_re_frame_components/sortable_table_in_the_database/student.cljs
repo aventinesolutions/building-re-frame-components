@@ -49,8 +49,7 @@
           [:th
            {:on-click #(cond
                         (= [i :ascending] sorts)
-                        (swap! table dissoc
-                               :sort-direction :sort-key)
+                        (rf/dispatch :table-remove-sort table-key)
                         (= [i :descending] sorts)
                         (swap! table assoc
                                :sort-direction :ascending)
