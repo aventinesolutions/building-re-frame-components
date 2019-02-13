@@ -49,11 +49,11 @@
           [:th
            {:on-click #(cond
                         (= [index :ascending] sorts)
-                        (rf/dispatch :table-remove-sort table-key)
+                        (rf/dispatch [:table-remove-sort table-key])
                         (= [index :descending] sorts)
-                        (rf/dispatch :table-sort-by table-key index :ascending)
+                        (rf/dispatch [:table-sort-by table-key index :ascending])
                         :else
-                        (rf/dispatch :table-sort-by table-key index :descending))}
+                        (rf/dispatch [:table-sort-by table-key index :descending]))}
            [:div {:style {:display :inline-block}}
             header]
            [:div
