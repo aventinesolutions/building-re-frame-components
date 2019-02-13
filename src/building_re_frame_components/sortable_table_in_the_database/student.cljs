@@ -28,6 +28,11 @@
  (fn [db [_ key index direction]]
    (update-in db [:tables key] assoc :sort-key index :sort-direction direction)))
 
+(rf/reg-event-db
+ :table-remove-sort
+ (fn [db [_ key]]
+   (update-in db [:tables key] dissoc :sort-key :sort-direction)))
+
 (defn sortable-table [table-key]
   (fn [table-key]
     (let [table @(rf/subscribe [:table table-key])
