@@ -24,7 +24,7 @@
    (get-in db [:tables key])))
 
 (rf/reg-event-db
-  :table-sort-by
+ :table-sort-by
  (fn [db [_ key index direction]]
    (update-in db [:tables key] assoc :sort-key index :sort-direction direction)))
 
@@ -34,46 +34,45 @@
    (update-in db [:tables key] dissoc :sort-key :sort-direction)))
 
 (defn sortable-table [table-key]
-  (fn [table-key]
-    (let [table @(rf/subscribe [:table table-key])
-          key   (:sort-key table)
-          dir   (:sort-direction table)
-          rows  (cond->> (:rows table)
-                         key                (sort-by #(nth % key))
-                         (= :ascending dir) reverse)
-          sorts [key dir]]
-      [:table
-       {:style {:font-size "80%"}}
+  (let [table @(rf/subscribe [:table table-key])
+        key   (:sort-key table)
+        dir   (:sort-direction table)
+        rows  (cond->> (:rows table)
+                       key                (sort-by #(nth % key))
+                       (= :ascending dir) reverse)
+        sorts [key dir]]
+    [:table
+     {:style {:font-size "80%"}}
+     [:tr
+      (for [[index header] (map vector (range) (:header table))]
+        [:th
+         {:on-click #(cond
+                      (= [index :ascending] sorts)
+                      (rf/dispatch [:table-remove-sort table-key])
+                      (= [index :descending] sorts)
+                      (rf/dispatch [:table-sort-by table-key index :ascending])
+                      :else
+                      (rf/dispatch [:table-sort-by table-key index :descending]))}
+         [:div {:style {:display :inline-block}}
+          header]
+         [:div
+          {:style {:display     :inline-block
+                   :line-height :1em
+                   :font-size   :60%}}
+          [:div
+           {:style {:color (if (= [index :descending] sorts)
+                             :black
+                             "#aaa")}}
+           "▲"]
+          [:div
+           {:style {:color (if (= [index :ascending] sorts)
+                             :black
+                             "#aaa")}}
+           "▼"]]])]
+     (for [row rows]
        [:tr
-        (for [[index header] (map vector (range) (:header table))]
-          [:th
-           {:on-click #(cond
-                        (= [index :ascending] sorts)
-                        (rf/dispatch [:table-remove-sort table-key])
-                        (= [index :descending] sorts)
-                        (rf/dispatch [:table-sort-by table-key index :ascending])
-                        :else
-                        (rf/dispatch [:table-sort-by table-key index :descending]))}
-           [:div {:style {:display :inline-block}}
-            header]
-           [:div
-            {:style {:display     :inline-block
-                     :line-height :1em
-                     :font-size   :60%}}
-            [:div
-             {:style {:color (if (= [index :descending] sorts)
-                               :black
-                               "#aaa")}}
-             "▲"]
-            [:div
-             {:style {:color (if (= [index :ascending] sorts)
-                               :black
-                               "#aaa")}}
-             "▼"]]])]
-       (for [row rows]
-         [:tr
-          (for [v row]
-            [:td v])])])))
+        (for [v row]
+          [:td v])])]))
 
 (defn ui []
   [:div
