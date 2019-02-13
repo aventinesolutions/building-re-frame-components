@@ -70,8 +70,8 @@
 
 (defn ui []
   [:div
-   [sortable-table :new-hope]
-   [sortable-table :new-hope]])
+   [:p [sortable-table :new-hope]]
+   [:p [sortable-table :new-hope]]])
 
 (when-some [el (js/document.getElementById "sortable-table-in-the-database--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
