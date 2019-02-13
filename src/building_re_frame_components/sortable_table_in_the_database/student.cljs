@@ -36,8 +36,8 @@
 (defn sortable-table [table-key]
   (fn [table-key]
     (let [table @(rf/subscribe [:table table-key])
-          key   (:sort-key @s)
-          dir   (:sort-direction @s)
+          key   (:sort-key table)
+          dir   (:sort-direction table)
           rows  (cond->> (:rows table)
                          key                (sort-by #(nth % key))
                          (= :ascending dir) reverse)
@@ -49,13 +49,13 @@
           [:th
            {:on-click #(cond
                         (= [i :ascending] sorts)
-                        (swap! s dissoc
+                        (swap! table dissoc
                                :sort-direction :sort-key)
                         (= [i :descending] sorts)
-                        (swap! s assoc
+                        (swap! table assoc
                                :sort-direction :ascending)
                         :else
-                        (swap! s assoc
+                        (swap! table assoc
                                :sort-key       i
                                :sort-direction :descending))}
            [:div {:style {:display :inline-block}}
