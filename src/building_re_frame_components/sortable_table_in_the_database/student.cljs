@@ -33,6 +33,14 @@
  (fn [db [_ key]]
    (update-in db [:tables key] dissoc :sort-key :sort-direction)))
 
+(rf/reg-sub :table-sorted
+            (fn [[_ key] _] (rf/subscribe [:table table-key]))
+            (fn []
+              (let [key (:sort-key table)
+                    direction (:sort-direction table)
+                    rows (cond->> (:rows table)
+                    key (sort-by #(nth % key)) (= :ascending direction) reverse)])))
+
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table table-key])
         key   (:sort-key table)
