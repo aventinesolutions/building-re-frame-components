@@ -51,8 +51,7 @@
                         (= [i :ascending] sorts)
                         (rf/dispatch :table-remove-sort table-key)
                         (= [i :descending] sorts)
-                        (swap! table assoc
-                               :sort-direction :ascending)
+                        (rf/dispatch :table-sort-by table-key i :ascending)
                         :else
                         (swap! table assoc
                                :sort-key       i
