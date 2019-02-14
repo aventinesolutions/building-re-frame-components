@@ -7,7 +7,7 @@
  (fn [db _]
    (select-keys db (filter #(= "teacher" (namespace %)) (keys db)))))
 
-(defn tag-editor [] [:div])
+(defn tag-editor [] [:div [:input {:type :text :style {:width "100%"}}]])
 
 (defn ui []
   [:div [tag-editor]])
