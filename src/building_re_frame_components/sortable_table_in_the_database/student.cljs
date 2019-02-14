@@ -11,6 +11,8 @@
    ["Chewbacca" "Bowcaster" "Good" 2.28]
    ["Darth Vader" "Light Saber" "Bad" 2.03]])
 
+(defn log [& args] (apply (.-log js/console) args))
+
 (rf/reg-event-db
  :initialize
  (fn [db _]
@@ -34,8 +36,8 @@
    (update-in db [:tables key] dissoc :sort-key :sort-direction)))
 
 (rf/reg-sub :table-sorted
-            (fn [[_ key] _] (rf/subscribe [:table table-key]))
-            (fn []
+            (fn [[_ key] _] (rf/subscribe [:table key]))
+            (fn [table]
               (let [key       (:sort-key table)
                     direction (:sort-direction table)
                     rows      (cond->> (:rows table) key        (sort-by #(nth % key))
@@ -46,14 +48,12 @@
                  (fn
                    [{:keys [db]}
                     [_ key index]]
-                   (let [table (get-in db (tables key))
-                         sorts [(:sort-key table) (:sort-direction table)]]
-                     {:dispatch (cond (= [index :ascending] sorts)
-                                      [:table-remove-sort key]
-                                      (= [index :descending] sorts)
-                                      [:table-sort-by key index :ascending]
-                                      :else
-                                      [:table-sort-by key index :descending])})))
+                   (let [table (get-in db (:tables key))
+                         sorts [(:sort-key table) (:sort-direction table)]
+                         event {:dispatch (cond (= [index :ascending] sorts)  [:table-remove-sort key]
+                                                (= [index :descending] sorts) [:table-sort-by key index :ascending]
+                                                :else                         [:table-sort-by key index :descending])}]
+                     (log (map #(str %) (:dispatch event))) event)))
 
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table-sorted table-key])
