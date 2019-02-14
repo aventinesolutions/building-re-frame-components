@@ -57,10 +57,7 @@
 
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table-sorted table-key])
-        key   (:sort-key table)
-        dir   (:sort-disrection table)
-        rows  (:rows table)
-        sorts [key dir]]
+        sorts [(:sort-key table) (:sort-disrection table)]]
     [:table
      {:style {:font-size "80%"}}
      [:tr
@@ -83,7 +80,7 @@
                              :black
                              "#aaa")}}
            "▼"]]])]
-     (for [row rows]
+     (for [row (:rows table)]
        [:tr
         (for [v row]
           [:td v])])]))
