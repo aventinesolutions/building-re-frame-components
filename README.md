@@ -1,39 +1,41 @@
-# building-re-frame-components
+# Building Re-Frame Components
 
-FIXME: Write a one-line description of your library/project.
+This repository is meant to accompany the [Building Re-frame Components](https://purelyfunctional.tv/courses/building-re-frame-components/) course at [PurelyFunctional.tv](https://purelyfunctional.tv/)
+
+The repo contains all of the code you need to live-edit the components in the course.
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+Clone this repo
 
-## Setup
+```bash
+$CMD git clone git@github.com:lispcast/building-re-frame-components.git
+```
 
-To get an interactive development environment run:
+Enter into the directory
 
-    lein figwheel
+```bash
+$CMD cd building-re-frame-components
+```
 
-and open your browser at [localhost:3449](http://localhost:3449/).
-This will auto compile and send all changes to the browser without the
-need to reload. After the compilation process is complete, you will
-get a Browser Connected REPL. An easy way to try it is:
+Now run Figwheel
 
-    (js/alert "Am I connected?")
+```bash
+$CMD lein figwheel
+```
 
-and you should see an alert in the browser window.
+Open your browser to: http://127.0.0.1:3449
 
-To clean all compiled files:
+Start editing the code in `src/`.
 
-    lein clean
-
-To create a production build run:
-
-    lein do clean, cljsbuild once min
-
-And open your browser in `resources/public/index.html`. You will not
-get live reloading, nor a REPL. 
+I like to have my editor open alongside my browser so I can see changes as they are reloaded.
 
 ## License
 
-Copyright © 2014 FIXME
+[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
-Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+To the extent possible under law, the person who associated CC0 with
+this work has waived all copyright and related or neighboring rights
+to the code in this repository.
+
+See the `LICENSE` file for more information.
