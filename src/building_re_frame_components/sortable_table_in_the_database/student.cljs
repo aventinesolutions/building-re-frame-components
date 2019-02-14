@@ -42,6 +42,8 @@
                                        (= :ascending direction) reverse)]
                 (assoc table :rows rows))))
 
+(rf/reg-event-fx :table-rotate-sort (fn [{:keys [db]} [_ key index]]))
+
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table-sorted table-key])
         key   (:sort-key table)
