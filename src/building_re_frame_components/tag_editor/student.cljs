@@ -9,11 +9,14 @@
 
 (defn tag-editor []
   (let [state (reagent/atom "")]
-    [:div [:input
-           {:type :text
-            :style {:width "100%"}
-            :vale @state
-            :on-change #(reset! % (-> % .-target .-value))}]]))
+    (fn []
+      [:div
+       [:p "state: " @state]
+       [:input
+        {:type      :text
+         :style     {:width "100%"}
+         :value     @state
+         :on-change #(reset! state (-> % .-target .-value))}]])))
 
 (defn ui []
   [:div [tag-editor]])
