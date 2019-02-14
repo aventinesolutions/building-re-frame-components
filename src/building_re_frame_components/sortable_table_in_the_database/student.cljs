@@ -43,7 +43,7 @@
                 (assoc table :rows rows))))
 
 (defn sortable-table [table-key]
-  (let [table @(rf/subscribe [:table table-key])
+  (let [table @(rf/subscribe [:table-sorted table-key])
         key   (:sort-key table)
         dir   (:sort-disrection table)
         rows  (:rows table)
