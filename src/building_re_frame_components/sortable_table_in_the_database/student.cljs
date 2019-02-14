@@ -66,13 +66,7 @@
      [:tr
       (for [[index header] (map vector (range) (:header table))]
         [:th
-         {:on-click #(cond
-                      (= [index :ascending] sorts)
-                      (rf/dispatch [:table-remove-sort table-key])
-                      (= [index :descending] sorts)
-                      (rf/dispatch [:table-sort-by table-key index :ascending])
-                      :else
-                      (rf/dispatch [:table-sort-by table-key index :descending]))}
+         {:on-click #(rf/dispatch [:table-rotate-sort table-key index])}
          [:div {:style {:display :inline-block}}
           header]
          [:div
