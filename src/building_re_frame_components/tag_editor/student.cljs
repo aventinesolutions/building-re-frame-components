@@ -7,7 +7,13 @@
  (fn [db _]
    (select-keys db (filter #(= "teacher" (namespace %)) (keys db)))))
 
-(defn tag-editor [] [:div [:input {:type :text :style {:width "100%"}}]])
+(defn tag-editor []
+  (let [state (reagent/atom "")]
+    [:div [:input
+           {:type :text
+            :style {:width "100%"}
+            :vale @state
+            :on-change #(reset! % (-> % .-target .-value))}]]))
 
 (defn ui []
   [:div [tag-editor]])
