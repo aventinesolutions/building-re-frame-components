@@ -7,6 +7,8 @@
  (fn [db _]
    (select-keys db (filter #(= "teacher" (namespace %)) (keys db)))))
 
+(rf/reg-sub :tags (fn [db _] (:tags db)))
+
 (defn tag-editor []
   (let [state (reagent/atom "")]
     (fn []
@@ -18,7 +20,7 @@
          :value     @state
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div (doall
-              (for [tag @(rf/subscribe [:tag])]
+              (for [tag @(rf/subscribe [:tags])]
                 [:div tag]))]])))
 
 (defn ui []
