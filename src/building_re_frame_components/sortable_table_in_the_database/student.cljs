@@ -53,7 +53,7 @@
                          event {:dispatch (cond (= [index :ascending] sorts)  [:table-remove-sort key]
                                                 (= [index :descending] sorts) [:table-sort-by key index :ascending]
                                                 :else                         [:table-sort-by key index :descending])}]
-                     (log (map #(str %) (:dispatch event))) event)))
+                     (log (pr-str event) (pr-str table) (pr-str sorts)) event)))
 
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table-sorted table-key])
