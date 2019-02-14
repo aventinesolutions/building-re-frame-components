@@ -39,7 +39,9 @@
               (let [key (:sort-key table)
                     direction (:sort-direction table)
                     rows (cond->> (:rows table)
-                    key (sort-by #(nth % key)) (= :ascending direction) reverse)])))
+                                  key (sort-by #(nth % key))
+                                  (= :ascending direction) reverse)]
+                (assoc table :rows rows))))
 
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table table-key])
