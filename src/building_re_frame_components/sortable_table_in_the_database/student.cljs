@@ -36,20 +36,17 @@
 (rf/reg-sub :table-sorted
             (fn [[_ key] _] (rf/subscribe [:table table-key]))
             (fn []
-              (let [key (:sort-key table)
+              (let [key       (:sort-key table)
                     direction (:sort-direction table)
-                    rows (cond->> (:rows table)
-                                  key (sort-by #(nth % key))
-                                  (= :ascending direction) reverse)]
+                    rows      (cond->> (:rows table) key        (sort-by #(nth % key))
+                                       (= :ascending direction) reverse)]
                 (assoc table :rows rows))))
 
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table table-key])
         key   (:sort-key table)
-        dir   (:sort-direction table)
-        rows  (cond->> (:rows table)
-                       key                (sort-by #(nth % key))
-                       (= :ascending dir) reverse)
+        dir   (:sort-disrection table)
+        rows  (:rows table)
         sorts [key dir]]
     [:table
      {:style {:font-size "80%"}}
