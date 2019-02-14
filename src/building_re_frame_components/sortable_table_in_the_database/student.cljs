@@ -47,7 +47,13 @@
                    [{:keys [db]}
                     [_ key index]]
                    (let [table (get-in db (tables key))
-                         sorts [(:sort-key table) (:sort-direction table)]])))
+                         sorts [(:sort-key table) (:sort-direction table)]]
+                     {:dispatch (cond (= [index :ascending] sorts)
+                                      [:table-remove-sort key]
+                                      (= [index :descending] sorts)
+                                      [:table-sort-by key index :ascending]
+                                      :else
+                                      [:table-sort-by key index :descending])})))
 
 (defn sortable-table [table-key]
   (let [table @(rf/subscribe [:table-sorted table-key])
