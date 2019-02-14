@@ -16,7 +16,10 @@
         {:type      :text
          :style     {:width "100%"}
          :value     @state
-         :on-change #(reset! state (-> % .-target .-value))}]])))
+         :on-change #(reset! state (-> % .-target .-value))}]
+       [:div (doall
+              (for [tag @(rf/subscribe [:tag])]
+                [:div tag]))]])))
 
 (defn ui []
   [:div [tag-editor]])
