@@ -11,7 +11,7 @@
 
 (rf/reg-event-db :save-tag
                  (fn [db [_ tag]]
-                   (update db :tags (fnil conj [] (.trim tag)) (log (pr-str (:tags db))))))
+                   (update db :tags (fnil conj [] (-> tag .trim .toLowerCase)) (log (pr-str (:tags db))))))
 
 (rf/reg-event-db :remove-tag
                  (fn [db [_ tag]]
