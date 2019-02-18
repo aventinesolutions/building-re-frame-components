@@ -15,7 +15,7 @@
 
 (defn tag-editor []
   (let [state (reagent/atom "")
-        key (reagent/atom "")]
+        key   (reagent/atom "")]
     (fn []
       [:div
        [:p "state: " @state]
@@ -27,13 +27,20 @@
          :on-key-up (fn [event]
                       (reset! key (.-key event))
                       (when
-                       (or (= "Enter" (.-key event)) (= " " (.-key event)))
-                       (rf/dispatch [:save-tag @state])
-                       (reset! state "")))
+                        (or (= "Enter" (.-key event)) (= " " (.-key event)))
+                        (rf/dispatch [:save-tag @state])
+                        (reset! state "")))
          :on-change #(reset! state (-> % .-target .-value))}]
-       [:div (doall
-              (for [tag @(rf/subscribe [:tags])]
-                [:div {:style {:color :white :background-color :grey :display :inline-block :margin "0.1em" :padding "0.2em"}} tag]))]])))
+       [:div
+        (doall
+         (for [tag @(rf/subscribe [:tags])]
+           [:div
+            {:style {:color            :white
+                     :background-color :grey
+                     :display          :inline-block
+                     :margin           "0.1em"
+                     :padding          "0.2em"}}
+            tag]))]])))
 
 (defn ui []
   [:div [tag-editor]])
