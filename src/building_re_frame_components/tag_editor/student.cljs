@@ -47,6 +47,7 @@
             tag
             [:a
              {:href     "#"
+              :style    {:margin-left "0.1em"}
               :on-click (fn [event] (.preventDefault event))}
              [:i.fa.fa-times]]]))]])))
 
