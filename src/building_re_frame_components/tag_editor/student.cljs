@@ -24,7 +24,7 @@
         key   (reagent/atom "")]
     (fn []
       [:div
-       [:p (pr-str @(rf/subscribe [:tags]))]
+       [:pre [:code (pr-str @(rf/subscribe [:tags]))]]
        [:p "state: " @state]
        [:p "key: " @key]
        [:input
