@@ -14,14 +14,17 @@
 (rf/reg-sub :tags (fn [db _] (:tags db)))
 
 (defn tag-editor []
-  (let [state (reagent/atom "")]
+  (let [state (reagent/atom "")
+        key (reagent/atom "")]
     (fn []
       [:div
        [:p "state: " @state]
+       [:p "key: " @key]
        [:input
         {:type      :text
          :style     {:width "100%"}
          :value     @state
+         :on-key-up (fn [event] (reset! key (.-key event)))
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div (doall
               (for [tag @(rf/subscribe [:tags])]
