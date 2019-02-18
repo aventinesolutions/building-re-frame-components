@@ -27,7 +27,7 @@
          :on-key-up (fn [event]
                       (reset! key (.-key event))
                       (when
-                       (= "Enter" (.-key event))
+                       (or (= "Enter" (.-key event)) (= " " (.-key event)))
                        (rf/dispatch [:save-tag @state])
                        (reset! state "")))
          :on-change #(reset! state (-> % .-target .-value))}]
