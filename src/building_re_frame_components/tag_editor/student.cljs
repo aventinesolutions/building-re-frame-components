@@ -13,6 +13,8 @@
                  (fn [db [_ tag]]
                    (update db :tags (fnil conj [] tag) (log (pr-str (:tags db))))))
 
+(rf/reg-event-db :remove-tag (fn [db [_ tag]]))
+
 (rf/reg-sub :tags (fn [db _] (:tags db)))
 
 (defn tag-editor []
@@ -48,7 +50,9 @@
             [:a
              {:href     "#"
               :style    {:margin-left "0.1em"}
-              :on-click (fn [event] (.preventDefault event))}
+              :on-click (fn [event]
+                          (.preventDefault event)
+                          (rf/dispatch [:remove-tag tag]))}
              [:i.fa.fa-times]]]))]])))
 
 (defn ui []
