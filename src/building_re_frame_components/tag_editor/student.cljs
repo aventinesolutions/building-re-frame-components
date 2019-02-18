@@ -2,8 +2,6 @@
   (:require [reagent.core :as reagent]
             [re-frame.core :as rf]))
 
-(defn log [& args] (apply js/console.log args))
-
 (rf/reg-event-db
  :initialize
  (fn [db _]
@@ -11,7 +9,7 @@
 
 (rf/reg-event-db :save-tag
                  (fn [db [_ tag]]
-                   (update db :tags (fnil conj #{} (-> tag .trim .toLowerCase)) (log (pr-str (:tags db))))))
+                   (update db :tags (fnil conj #{} (-> tag .trim .toLowerCase)))))
 
 (rf/reg-event-db :remove-tag
                  (fn [db [_ tag]]
@@ -26,9 +24,6 @@
         key   (reagent/atom "")]
     (fn []
       [:div
-       [:pre [:code (pr-str @(rf/subscribe [:tags]))]]
-       [:p "state: " @state]
-       [:p "key: " @key]
        [:input
         {:type      :text
          :style     {:width "100%"}
