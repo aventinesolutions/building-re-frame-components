@@ -25,11 +25,12 @@
          :style     {:width "100%"}
          :value     @state
          :on-key-up (fn [event]
-                      (reset! key (.-key event))
-                      (when
-                        (or (= "Enter" (.-key event)) (= " " (.-key event)))
-                        (rf/dispatch [:save-tag @state])
-                        (reset! state "")))
+                      (let [pressed (.-key event)]
+                        (reset! key pressed)
+                        (when
+                          (or (= "Enter" pressed) (= " " pressed))
+                          (rf/dispatch [:save-tag @state])
+                          (reset! state ""))))
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div
         (doall
