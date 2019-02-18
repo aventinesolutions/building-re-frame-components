@@ -17,7 +17,9 @@
                  (fn [db [_ tag]]
                    (update db :tags (fn [tags] (vec (remove #{tag} tags))))))
 
-(rf/reg-sub :tags (fn [db _] (:tags db)))
+(rf/reg-sub :tags-raw (fn [db _] (:tags db)))
+
+(rf/reg-sub :tags (fn [] (rf/subscribe [:tags-raw])) (fn [tags] (sort tags)))
 
 (defn tag-editor []
   (let [state (reagent/atom "")
