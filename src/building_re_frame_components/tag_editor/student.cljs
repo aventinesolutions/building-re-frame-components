@@ -7,6 +7,10 @@
  (fn [db _]
    (select-keys db (filter #(= "teacher" (namespace %)) (keys db)))))
 
+(rf/reg-event-db :save-tag
+                 (fn [db [_ tag]]
+                   (update db :tags (fnil conj [] tag))))
+
 (rf/reg-sub :tags (fn [db _] (:tags db)))
 
 (defn tag-editor []
