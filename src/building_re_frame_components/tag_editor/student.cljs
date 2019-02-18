@@ -13,7 +13,9 @@
                  (fn [db [_ tag]]
                    (update db :tags (fnil conj [] tag) (log (pr-str (:tags db))))))
 
-(rf/reg-event-db :remove-tag (fn [db [_ tag]]))
+(rf/reg-event-db :remove-tag
+                 (fn [db [_ tag]]
+                   (update db :tags (fn [tags] (vec (remove #{tag} tags))))))
 
 (rf/reg-sub :tags (fn [db _] (:tags db)))
 
