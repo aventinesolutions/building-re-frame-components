@@ -33,7 +33,7 @@
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div (doall
               (for [tag @(rf/subscribe [:tags])]
-                [:div {:style {:background-color :grey :display :inline-block :margin-left "0.5em"}} tag]))]])))
+                [:div {:style {:color :white :background-color :grey :display :inline-block :margin "0.1em" :padding "0.2em"}} tag]))]])))
 
 (defn ui []
   [:div [tag-editor]])
