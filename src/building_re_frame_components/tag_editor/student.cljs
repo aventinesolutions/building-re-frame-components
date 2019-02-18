@@ -28,7 +28,8 @@
                       (reset! key (.-key event))
                       (when
                        (= "Enter" (.-key event))
-                       (rf/dispatch [:save-tag @state])))
+                       (rf/dispatch [:save-tag @state])
+                       (reset! state "")))
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div (doall
               (for [tag @(rf/subscribe [:tags])]
