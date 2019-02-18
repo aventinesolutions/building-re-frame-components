@@ -30,11 +30,12 @@
                       (let [pressed (.-key event)]
                         (reset! key pressed)
                         (when
-                          (or (= "Enter" pressed) (= " " pressed))
-                          (rf/dispatch [:save-tag @state])
-                          (reset! state ""))))
+                         (or (= "Enter" pressed) (= " " pressed))
+                         (rf/dispatch [:save-tag @state])
+                         (reset! state ""))))
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div
+        "Tags: "
         (doall
          (for [tag @(rf/subscribe [:tags])]
            [:div
@@ -43,7 +44,11 @@
                      :display          :inline-block
                      :margin           "0.1em"
                      :padding          "0.2em"}}
-            tag]))]])))
+            tag
+            [:a
+             {:href     "#"
+              :on-click (fn [event] (.preventDefault event))}
+             [:i.fa.fa-times]]]))]])))
 
 (defn ui []
   [:div [tag-editor]])
