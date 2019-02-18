@@ -24,7 +24,11 @@
         {:type      :text
          :style     {:width "100%"}
          :value     @state
-         :on-key-up (fn [event] (reset! key (.-key event)))
+         :on-key-up (fn [event]
+                      (reset! key (.-key event))
+                      (when
+                       (= "Enter" (.-key event))
+                       (rf/dispatch [:save-tag @state])))
          :on-change #(reset! state (-> % .-target .-value))}]
        [:div (doall
               (for [tag @(rf/subscribe [:tags])]
