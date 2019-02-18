@@ -2,6 +2,8 @@
   (:require [reagent.core :as reagent]
             [re-frame.core :as rf]))
 
+(defn log [& args] (apply js/console.log args))
+
 (rf/reg-event-db
  :initialize
  (fn [db _]
@@ -9,7 +11,7 @@
 
 (rf/reg-event-db :save-tag
                  (fn [db [_ tag]]
-                   (update db :tags (fnil conj [] tag))))
+                   (update db :tags (fnil conj [] tag) (log (pr-str (:tags db))))))
 
 (rf/reg-sub :tags (fn [db _] (:tags db)))
 
