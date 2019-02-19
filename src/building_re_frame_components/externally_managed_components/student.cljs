@@ -10,7 +10,8 @@
 (defn [element options] (js/CodeMirror. element (clj->js options)))
 
 (defn codemirror [initial-value option]
-  (let [state (reagent/atom [:value initial-value])]))
+  (let [state (reagent/atom [:value initial-value])]
+    (reagent/create-class {:reagent-render (fn [] [:div])})))
 
 (defn ui []
   [:div
