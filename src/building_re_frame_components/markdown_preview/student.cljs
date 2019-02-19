@@ -3,9 +3,9 @@
             [re-frame.core :as rf]))
 
 (rf/reg-event-db
-  :initialize
-  (fn [_ _]
-    {}))
+ :initialize
+ (fn [_ _]
+   {}))
 
 (defonce converter (new js/showdown.Converter))
 
@@ -16,7 +16,9 @@
   (let [state (reagent/atom {:value initial-value})]
     (fn []
       [:div
-       [:textarea {:value (:value @state)}]
+       [:textarea
+        {:value     (:value @state)
+         :on-change #(swap! state assoc :value (-> % .-target .-value))}]
        [:div (->html (:value @state))]])))
 
 (defn ui []
