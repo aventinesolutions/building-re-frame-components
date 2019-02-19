@@ -9,6 +9,9 @@
 
 (defn [element options] (js/CodeMirror. element (clj->js options)))
 
+(defn codemirror [initial-value option]
+  (let [state (reagent/atom [:value initial-value])]))
+
 (defn ui []
   [:div
    "Put the CodeMirror editor here."])
