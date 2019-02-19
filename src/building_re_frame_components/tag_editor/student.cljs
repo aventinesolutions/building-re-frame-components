@@ -1,8 +1,7 @@
 (ns building-re-frame-components.tag-editor.student
   (:require [reagent.core :as reagent]
-            [re-frame.core :as rf]))
-
-(defn log [& args] (apply js/console.log args))
+            [re-frame.core :as rf]
+            [clojure.string :as str]))
 
 (rf/reg-event-db
  :initialize
@@ -10,8 +9,9 @@
    (select-keys db (filter #(= "teacher" (namespace %)) (keys db)))))
 
 (rf/reg-event-db :save-tag
-                 (fn [db [_ tag]]
-                   (update db :tags (fnil conj #{} (-> tag .trim .toLowerCase)) (log (pr-str (:tags db))))))
+                 (fn [db [_ raw]]
+                   (let [tag (-> raw .trim .toLowerCase)]
+                     (if-not (str/blank? tag) (update db :tags (fnil conj #{}) tag)))))
 
 (rf/reg-event-db :remove-tag
                  (fn [db [_ tag]]
@@ -26,9 +26,6 @@
         key   (reagent/atom "")]
     (fn []
       [:div
-       [:pre [:code (pr-str @(rf/subscribe [:tags]))]]
-       [:p "state: " @state]
-       [:p "key: " @key]
        [:input
         {:type      :text
          :style     {:width "100%"}
