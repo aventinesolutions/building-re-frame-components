@@ -21,8 +21,7 @@
 
 (defn ui []
   [:div
-   [:div "# some markdown"]
-   [:div (->html "# some markdown")]])
+   [:div markdown-editor-with-preview "# some markdown"]])
 
 (when-some [el (js/document.getElementById "markdown-preview--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
