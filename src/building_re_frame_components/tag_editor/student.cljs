@@ -11,7 +11,7 @@
 (rf/reg-event-db :save-tag
                  (fn [db [_ raw]]
                    (let [tag (-> raw .trim .toLowerCase)]
-                     (if-not (str/blank? tag) (update db :tags (fnil conj #{} tag))))))
+                     (if-not (str/blank? tag) (update db :tags (fnil conj #{}) tag)))))
 
 (rf/reg-event-db :remove-tag
                  (fn [db [_ tag]]
