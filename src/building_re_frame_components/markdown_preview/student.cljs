@@ -12,7 +12,9 @@
 (defn ->html [s]
   (.makeHtml converter s))
 
-(defn markdown-editor-with-preview [initial-value] (let [state (reagent/atom {:value initial-value})]))
+(defn markdown-editor-with-preview [initial-value]
+  (let [state (reagent/atom {:value initial-value})]
+    (fn [] [:div [:textarea {:value (:value @state)}]])))
 
 (defn ui []
   [:div
