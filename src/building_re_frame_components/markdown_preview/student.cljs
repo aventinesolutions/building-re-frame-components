@@ -14,7 +14,10 @@
 
 (defn markdown-editor-with-preview [initial-value]
   (let [state (reagent/atom {:value initial-value})]
-    (fn [] [:div [:textarea {:value (:value @state)}]])))
+    (fn []
+      [:div
+       [:textarea {:value (:value @state)}]
+       [:div (->html (:value @state))]])))
 
 (defn ui []
   [:div
