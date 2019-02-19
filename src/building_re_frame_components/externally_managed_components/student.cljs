@@ -7,14 +7,15 @@
  (fn [_ _]
    {}))
 
-(defn [element options] (js/CodeMirror. element (clj->js options)))
+(defn create-codemirror [element options] (js/CodeMirror. element (clj->js options)))
 
 (defn codemirror [initial-value option]
   (let [state (reagent/atom [:value initial-value])]
     (reagent/create-class {:reagent-render (fn [] [:div])
-                           :component-did-mount (fn [component])})))
+                           :component-did-mount (fn [component]
+                                                  (let [editor (create-codemirror (reagent/dom-node component) (assoc options :value initial-value))]))})))
 
-(defn ui []
+(defn ui
   [:div
    "Put the CodeMirror editor here."])
 
