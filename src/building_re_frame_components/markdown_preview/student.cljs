@@ -23,7 +23,7 @@
 
 (defn ui []
   [:div
-   [markdown-editor-with-preview "# some markdown"]])
+   [markdown-editor-with-preview "# Aventine Solutions"]])
 
 (when-some [el (js/document.getElementById "markdown-preview--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
