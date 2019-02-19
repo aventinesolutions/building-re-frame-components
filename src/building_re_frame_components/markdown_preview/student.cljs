@@ -20,7 +20,7 @@
         {:style     {:width "100%"}
          :value     (:value @state)
          :on-change #(swap! state assoc :value (-> % .-target .-value))}]
-       [:div (->html (:value @state))]])))
+       [:div {:dangerouslySetInnerHTML {:__html (->html (:value @state))}}]])))
 
 (defn ui []
   [:div
