@@ -9,8 +9,8 @@
 
 (defonce converter (new js/showdown.Converter))
 
-(defn ->html [s]
-  (.makeHtml converter s))
+(defn ->html [markdown]
+  (.makeHtml converter markdown))
 
 (defn markdown-editor-with-preview [initial-value]
   (let [state (reagent/atom {:value initial-value})]
