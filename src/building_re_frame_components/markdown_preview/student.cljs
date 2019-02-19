@@ -12,6 +12,10 @@
 (defn ->html [markdown]
   (.makeHtml converter markdown))
 
+(defn markdown-view [state]
+  [:div.markdown
+   {:dangerouslySetInnerHTML {:__html (->html state)}}])
+
 (defn markdown-editor-with-preview [initial-value]
   (let [state (reagent/atom {:value initial-value})]
     (fn []
@@ -20,7 +24,7 @@
         {:style     {:width "100%"}
          :value     (:value @state)
          :on-change #(swap! state assoc :value (-> % .-target .-value))}]
-       [:div {:dangerouslySetInnerHTML {:__html (->html (:value @state))}}]])))
+       [markdown-view (:value @state)]])))
 
 (defn ui []
   [:div
