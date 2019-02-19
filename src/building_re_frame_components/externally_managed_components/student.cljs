@@ -7,6 +7,7 @@
  (fn [_ _]
    {}))
 
+(defn [element options] (js/CodeMirror. element (clj->js options)))
 
 (defn ui []
   [:div
