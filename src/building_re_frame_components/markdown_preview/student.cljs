@@ -17,7 +17,8 @@
     (fn []
       [:div
        [:textarea
-        {:value     (:value @state)
+        {:style     {:width "100%"}
+         :value     (:value @state)
          :on-change #(swap! state assoc :value (-> % .-target .-value))}]
        [:div (->html (:value @state))]])))
 
