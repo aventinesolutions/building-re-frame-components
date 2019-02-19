@@ -11,7 +11,8 @@
 
 (defn codemirror [initial-value option]
   (let [state (reagent/atom [:value initial-value])]
-    (reagent/create-class {:reagent-render (fn [] [:div])})))
+    (reagent/create-class {:reagent-render (fn [] [:div])
+                           :component-did-mount (fn [component])})))
 
 (defn ui []
   [:div
