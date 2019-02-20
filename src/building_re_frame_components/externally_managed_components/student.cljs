@@ -21,7 +21,7 @@
 
 (defn ui []
   [:div
-   "Put the CodeMirror editor here."])
+   [codemirror "Aventine Solutions" {}]])
 
 (when-some [el (js/document.getElementById "externally-managed-components--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
