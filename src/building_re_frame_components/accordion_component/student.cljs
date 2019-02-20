@@ -8,12 +8,14 @@
    {}))
 
 (defn accordion [& children]
-  [:div
-   (let [groups (partition 2 children)]
-     (for [[header content] groups]
+  (let [state (reagent/atom {:current nil})]
+    (fn [& children] [:div (pr-str @state)
+   (let [groups (partition 2 children)
+         groups (map conj groups (range))]
+     (for [[index header content] groups]
        [:div
-        [:div {:style {:background-color "#aaa"}} header]
-        [:div {:style {:background-color "#ccc" :height 0 :overflow "hidden"}} content]]))])
+        [:div {:style {:background-color "#aaa"}} index header]
+        [:div {:style {:background-color "#ccc" :height 0 :overflow "hidden"}} content]]))])))
 
 (defn ui []
   [:div
