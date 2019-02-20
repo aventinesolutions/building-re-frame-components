@@ -9,22 +9,29 @@
 
 (defn accordion [& children]
   (let [state (reagent/atom {:current nil})]
-    (fn [& children] [:div (pr-str @state)
-   (let [groups (partition 2 children)
-         groups (map conj groups (range))]
-     (for [[index header content] groups]
-       [:div
-        [:div {:style {:background-color "#aaa"}} index header]
-        [:div {:style {:background-color "#ccc" :height 0 :overflow "hidden"}} content]]))])))
+    (fn [& children]
+      [:div
+       (pr-str @state)
+       (let [groups (partition 2 children)
+             groups (map conj groups (range))]
+         (for [[index header content] groups]
+           [:div
+            [:div
+             {:style
+              {:background-color "#aaa"}
+              :on-click (fn [] (swap! state assoc :current index))}
+             index
+             header]
+            [:div {:style {:background-color "#ccc" :height 0 :overflow "hidden"}} content]]))])))
 
 (defn ui []
   [:div
    [accordion
-    "a"
+    "abbie"
     [:ul [:li "bemb"] [:li "xani"] [:li "frip"]]
-    "b"
+    "blimp"
     [:p "frap"]
-    "c"
+    "chuck"
     [:p [:em "pamp"]]]])
 
 (when-some [el (js/document.getElementById "accordion-component--student")]
