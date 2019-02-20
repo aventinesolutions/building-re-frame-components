@@ -17,7 +17,8 @@
       :component-did-mount
       (fn [component]
         (let [editor (create-codemirror (reagent/dom-node component)
-                                        (assoc options :value initial-value))]))})))
+                                        (assoc options :value initial-value))]
+          (.on editor "change" #(swap! state assoc :value (.getValue editor)))))})))
 
 (defn ui []
   [:div
