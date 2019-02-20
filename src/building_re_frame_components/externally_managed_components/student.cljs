@@ -10,7 +10,7 @@
 (defn create-codemirror [element options]
   (js/CodeMirror. element (clj->js options)))
 
-(defn codemirror [initial-value option]
+(defn codemirror [initial-value options]
   (let [state (reagent/atom {:value initial-value})]
     (reagent/create-class
      {:reagent-render (fn [] [:div])
@@ -21,7 +21,7 @@
 
 (defn ui []
   [:div
-   [codemirror "Aventine Solutions" {}]])
+   [codemirror "Aventine Solutions" {:lineNumbers true}]])
 
 (when-some [el (js/document.getElementById "externally-managed-components--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
