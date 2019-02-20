@@ -18,9 +18,9 @@
     "a"
     [:ul [:li "bemb"] [:li "xani"] [:li "frip"]]
     "b"
-    [:p "Choice B"]
+    [:p "frap"]
     "c"
-    [:p "Choice C"]]])
+    [:p [:em "pamp"]]]])
 
 (when-some [el (js/document.getElementById "accordion-component--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
