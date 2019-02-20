@@ -7,7 +7,10 @@
  (fn [_ _]
    {}))
 
-(defn accordion [& children] [:div children])
+(defn accordion [& children]
+  [:div
+   (let [groups (partition 2 children)]
+     (for [[header content] groups] [:div [:div header] [:div content]]))])
 
 (defn ui []
   [:div
