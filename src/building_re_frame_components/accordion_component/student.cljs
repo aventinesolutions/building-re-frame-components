@@ -16,7 +16,7 @@
   [:div
    [accordion
     "a"
-    [:p "Choice A"]
+    [:ul [:li "bemb"] [:li "xani"] [:li "frip"]]
     "b"
     [:p "Choice B"]
     "c"
