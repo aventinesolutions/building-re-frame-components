@@ -13,7 +13,7 @@
      (for [[header content] groups]
        [:div
         [:div {:style {:background-color "#aaa"}} header]
-        [:div {:style {:background-color "#ccc"}} content]]))])
+        [:div {:style {:background-color "#ccc" :height 0 :overflow "hidden"}} content]]))])
 
 (defn ui []
   [:div
