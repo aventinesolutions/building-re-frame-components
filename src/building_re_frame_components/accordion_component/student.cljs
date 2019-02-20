@@ -10,7 +10,10 @@
 (defn accordion [& children]
   [:div
    (let [groups (partition 2 children)]
-     (for [[header content] groups] [:div [:div header] [:div content]]))])
+     (for [[header content] groups]
+       [:div
+        [:div {:style {:background-color "#aaa"}} header]
+        [:div {:style {:background-color "#ccc"}} content]]))])
 
 (defn ui []
   [:div
