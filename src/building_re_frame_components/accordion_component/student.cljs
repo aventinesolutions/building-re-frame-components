@@ -7,9 +7,11 @@
  (fn [_ _]
    {}))
 
+(defn accordion [& children] [:div children])
+
 (defn ui []
   [:div
-   [:div
+   [accordion
     "a"
     [:p "Choice A"]
     "b"
