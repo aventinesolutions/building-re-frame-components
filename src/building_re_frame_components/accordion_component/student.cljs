@@ -28,7 +28,7 @@
                :height           (if (= index (:current @state)) :auto 0)
                :overflow         "hidden"
                :transition       "height 0.5s"}}
-             content]]))])))
+             [:div {:ref #(swap! state assoc-in [:refs index] %)} content]]]))])))
 
 (defn ui []
   [:div
