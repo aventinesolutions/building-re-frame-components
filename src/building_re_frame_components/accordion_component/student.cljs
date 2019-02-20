@@ -19,7 +19,8 @@
             [:div
              {:style
               {:background-color "#aaa"}
-              :on-click (fn [] (swap! state assoc :current index))}
+              :on-click (fn []
+                          (swap! state update :current #(if (= index %) nil index)))}
              index
              header]
             [:div
