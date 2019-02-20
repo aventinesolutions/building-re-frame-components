@@ -21,13 +21,13 @@
               {:background-color "#aaa"}
               :on-click (fn []
                           (swap! state update :current #(if (= index %) nil index)))}
-             index
              header]
             [:div
              {:style
               {:background-color "#ccc"
                :height           (if (= index (:current @state)) :auto 0)
-               :overflow         "hidden"}}
+               :overflow         "hidden"
+               :transition       "height 0.5s"}}
              content]]))])))
 
 (defn ui []
