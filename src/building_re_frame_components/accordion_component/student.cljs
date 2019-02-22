@@ -21,7 +21,8 @@
               {:background-color "#aaa"}
               :on-click (fn []
                           (swap! state update :current #(if (= index %) nil index)))}
-             header]
+             header " "
+             (when-let [element (get-in @state  [:refs index])] (.-clientHeight element))]
             [:div
              {:style
               {:background-color "#ccc"
