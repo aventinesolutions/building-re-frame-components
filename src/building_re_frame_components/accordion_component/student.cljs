@@ -32,7 +32,7 @@
 
 (defn ui []
   [:div
-   [accordion
+   [accordion {:active 2}
     "abbie"
     [:ul [:li "bemb"] [:li "xani"] [:li "frip"]]
     "blimp"
