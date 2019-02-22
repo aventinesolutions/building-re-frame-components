@@ -11,9 +11,8 @@
   (let [state (reagent/atom {:order (range (count items))})]
     (fn []
       [:ul
-       (for [[index item]
-             (map vector (range) items)]
-         [:li {:key index} item])])))
+       (for [index (:order @state)]
+         [:li {:key index} (nth items index)])])))
 
 (defn ui []
   [:div
