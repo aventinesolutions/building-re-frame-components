@@ -8,11 +8,12 @@
    {}))
 
 (defn draggable-list [& items]
-  (let [state (reagent/atom {:order (range (count items))})]
+  (let [items (vec items)
+        state (reagent/atom {:order (range (count items))})]
     (fn []
       [:ul
        (for [index (:order @state)]
-         [:li {:key index} (nth items index)])])))
+         [:li {:key index} (get items index)])])))
 
 (defn ui []
   [:div
