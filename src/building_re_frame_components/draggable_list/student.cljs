@@ -10,10 +10,11 @@
 (defn ui []
   [:div
    [:div
-    "a"
-    "b"
-    "c"
-    "d"]])
+    "ximo"
+    "flip"
+    "quip"
+    "pequercky"
+    "synon"]])
 
 (when-some [el (js/document.getElementById "draggable-list--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
