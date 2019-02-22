@@ -7,11 +7,11 @@
  (fn [_ _]
    {}))
 
-(defn draggable-list [& items])
+(defn draggable-list [& items] [:div items])
 
 (defn ui []
   [:div
-   [:div
+   [draggable-list
     "ximo"
     "flip"
     "quip"
