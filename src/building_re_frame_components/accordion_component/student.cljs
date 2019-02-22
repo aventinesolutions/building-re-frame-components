@@ -7,9 +7,9 @@
  (fn [_ _]
    {}))
 
-(defn accordion [& children]
-  (let [state (reagent/atom {:current nil})]
-    (fn [& children]
+(defn accordion [options & children]
+  (let [state (reagent/atom {:current (:active options)})]
+    (fn [options & children]
       [:div
        (pr-str @state)
        (let [groups (partition 2 children)
