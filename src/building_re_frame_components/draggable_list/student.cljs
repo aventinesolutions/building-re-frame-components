@@ -18,7 +18,8 @@
           [:li
            {:key           index
             :draggable     true
-            :on-drag-start #(swap! state assoc :drag-index index)}
+            :on-drag-start #(swap! state assoc :drag-index index)
+            :on-drag-end #(swap! state dissoc :drag-index)}
            (get items index)])]])))
 
 (defn ui []
