@@ -8,7 +8,7 @@
    {}))
 
 (defn draggable-list [& items]
-  [:ul (for [item items] [:li item])])
+  [:ul (for [[index item] (map vector (range) items)] [:li {:key index} item])])
 
 (defn ui []
   [:div
