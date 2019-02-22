@@ -7,15 +7,38 @@
  (fn [_ _]
    {}))
 
+(defn accordion [options & children]
+  (let [state (reagent/atom {:current (:active options)})]
+    (fn [options & children]
+      @state
+      [:div
+       (let [groups (partition 2 children)
+             groups (map conj groups (range))]
+         (for [[index header content] groups]
+           [:div
+            [:div
+             {:style
+              {:background-color "#aaa"}
+              :on-click (fn []
+                          (swap! state update :current #(if (= index %) nil index)))}
+             header]
+            [:div
+             {:style
+              {:background-color "#ccc"
+               :height           (if (= index (:current @state)) (when-let [element (get-in @state  [:refs index])] (.-clientHeight element)) 0)
+               :overflow         "hidden"
+               :transition       "height 0.5s"}}
+             [:div {:ref #(swap! state assoc-in [:refs index] %)} content]]]))])))
+
 (defn ui []
   [:div
-   [:div
-    "a"
-    [:p "Choice A"]
-    "b"
-    [:p "Choice B"]
-    "c"
-    [:p "Choice C"]]])
+   [accordion {:active 2}
+    "abbie"
+    [:ul [:li "bemb"] [:li "xani"] [:li "frip"]]
+    "blimp"
+    [:p "frap"]
+    "chuck"
+    [:p [:em "pamp"]]]])
 
 (when-some [el (js/document.getElementById "accordion-component--student")]
   (defonce _init (rf/dispatch-sync [:initialize]))
