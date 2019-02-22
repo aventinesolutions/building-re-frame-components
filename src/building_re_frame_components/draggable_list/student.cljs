@@ -13,7 +13,7 @@
     (fn []
       [:ul
        (for [index (:order @state)]
-         [:li {:key index} (get items index)])])))
+         [:li {:key index :draggable true} (get items index)])])))
 
 (defn ui []
   [:div
