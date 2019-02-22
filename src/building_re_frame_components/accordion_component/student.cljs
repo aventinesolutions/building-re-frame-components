@@ -21,12 +21,11 @@
               {:background-color "#aaa"}
               :on-click (fn []
                           (swap! state update :current #(if (= index %) nil index)))}
-             header " "
-             (when-let [element (get-in @state  [:refs index])] (.-clientHeight element))]
+             header]
             [:div
              {:style
               {:background-color "#ccc"
-               :height           (if (= index (:current @state)) :auto 0)
+               :height           (if (= index (:current @state)) (when-let [element (get-in @state  [:refs index])] (.-clientHeight element)) 0)
                :overflow         "hidden"
                :transition       "height 0.5s"}}
              [:div {:ref #(swap! state assoc-in [:refs index] %)} content]]]))])))
