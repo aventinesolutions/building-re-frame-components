@@ -19,7 +19,10 @@
            {:key           index
             :draggable     true
             :on-drag-start #(swap! state assoc :drag-index index)
-            :on-drag-end #(swap! state dissoc :drag-index)}
+            :on-drag-end #(swap! state dissoc :drag-index)
+            :on-drag-over (fn [event]
+                            (.preventDefault event)
+                            (swap! state assoc :drag-over index) )}
            (get items index)])]])))
 
 (defn ui []
