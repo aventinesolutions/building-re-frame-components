@@ -11,9 +11,15 @@
   (let [items (vec items)
         state (reagent/atom {:order (range (count items))})]
     (fn []
-      [:ul
-       (for [index (:order @state)]
-         [:li {:key index :draggable true} (get items index)])])))
+      [:div
+       [:code (pr-str @state)]
+       [:ul
+        (for [index (:order @state)]
+          [:li
+           {:key           index
+            :draggable     true
+            :on-drag-start #(swap! state assoc :drag-index index)}
+           (get items index)])]])))
 
 (defn ui []
   [:div
