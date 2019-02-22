@@ -7,7 +7,8 @@
  (fn [_ _]
    {}))
 
-(defn draggable-list [& items] [:div items])
+(defn draggable-list [& items]
+  [:ul (for [item items] [:li item])])
 
 (defn ui []
   [:div
