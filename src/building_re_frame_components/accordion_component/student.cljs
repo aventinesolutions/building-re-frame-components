@@ -10,8 +10,8 @@
 (defn accordion [options & children]
   (let [state (reagent/atom {:current (:active options)})]
     (fn [options & children]
+      @state
       [:div
-       (pr-str @state)
        (let [groups (partition 2 children)
              groups (map conj groups (range))]
          (for [[index header content] groups]
