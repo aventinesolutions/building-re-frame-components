@@ -1,6 +1,6 @@
 (ns building-re-frame-components.accordion-component.student
-  (:require [reagent.core :as reagent]
-            [re-frame.core :as rf]))
+ (:require [reagent.core :as reagent]
+           [re-frame.core :as rf]))
 
 (rf/reg-event-db
  :initialize
