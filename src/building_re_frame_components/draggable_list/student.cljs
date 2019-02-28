@@ -12,18 +12,19 @@
         state (reagent/atom {:order (range (count items))})]
     (fn []
       [:div
-       [:code (pr-str @state)]
        [:ul
         (for [index (:order @state)]
           [:li
            {:key           index
             :draggable     true
             :on-drag-start #(swap! state assoc :drag-index index)
-            :on-drag-end #(swap! state dissoc :drag-index :drag-over)
-            :on-drag-over (fn [event]
-                            (.preventDefault event)
-                            (swap! state assoc :drag-over index) )}
-           (get items index)])]])))
+            :on-drag-end   #(swap! state dissoc :drag-index :drag-over)
+            :on-drag-over  (fn [event]
+                             (.preventDefault event)
+                             (swap! state assoc :drag-over index))
+            :on-drag-leave (fn [] (swap! state assoc :drag-index :nothing))}
+           (get items index)])]
+       [:code (pr-str @state)]])))
 
 (defn ui []
   [:div
