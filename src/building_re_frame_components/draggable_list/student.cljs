@@ -7,6 +7,8 @@
  (fn [_ _]
    {}))
 
+(defn change-position [order before item])
+
 (defn draggable-list [& items]
   (let [items (vec items)
         state (reagent/atom {:order (range (count items))})]
