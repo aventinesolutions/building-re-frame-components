@@ -8,8 +8,10 @@
    {}))
 
 (defn change-position [order before item]
-  (if (empty? order) (list item)
-    (let [[first & rest] order]) ) )
+  (if (empty? order)
+    (list item)
+    (let [[first & rest] order]
+      (cond (= first before) (cons item (remove #{item} order))))))
 
 (defn draggable-list [& items]
   (let [items (vec items)
