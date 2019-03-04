@@ -19,23 +19,24 @@
     (fn []
       [:div
        [:ul
-        (for [[index position] (map vector (:order @state) (range))]
-          [:li
-           {:key           index
-            :draggable     true
-            :style         {:border (when (= index (:drag-index @state)) "1px solid green")}
-            :on-drag-start #(swap! state assoc :drag-index index)
-            :on-drag-end   (fn []
-                             (swap! state dissoc :drag-index :drag-over)
-                             (on-reorder (:order @state)))
-            :on-drag-over  (fn [event]
-                             (.preventDefault event)
-                             (swap! state assoc :drag-over position)
-                             (swap! state update :order
-                                    change-position (:drag-over @state) (:drag-index @state)))
-            :on-drag-leave (fn [event]
-                             (swap! state assoc :drag-over :nothing))}
-           (get items index)])]])))
+        (doall
+          (for [[index position] (map vector (:order @state) (range))]
+            [:li
+             {:key           index
+              :draggable     true
+              :style         {:border (when (= index (:drag-index @state)) "1px solid green")}
+              :on-drag-start #(swap! state assoc :drag-index index)
+              :on-drag-end   (fn []
+                               (swap! state dissoc :drag-index :drag-over)
+                               (on-reorder (:order @state)))
+              :on-drag-over  (fn [event]
+                               (.preventDefault event)
+                               (swap! state assoc :drag-over position)
+                               (swap! state update :order
+                                      change-position (:drag-over @state) (:drag-index @state)))
+              :on-drag-leave (fn [event]
+                               (swap! state assoc :drag-over :nothing))}
+             (get items index)]))]])))
 
 (defn ui []
   [:div
