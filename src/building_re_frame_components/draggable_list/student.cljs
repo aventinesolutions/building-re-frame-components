@@ -33,8 +33,7 @@
                                     change-position (:drag-over @state) (:drag-index @state)))
             :on-drag-leave (fn [event]
                              (swap! state assoc :drag-over :nothing))}
-           (get items index)])]
-       [:code (pr-str @state)]])))
+           (get items index)])]])))
 
 (defn ui []
   [:div
