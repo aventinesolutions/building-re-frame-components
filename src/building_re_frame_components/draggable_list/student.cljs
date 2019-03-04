@@ -28,7 +28,7 @@
               :on-drag-start #(swap! state assoc :drag-index index)
               :on-drag-end   (fn []
                                (swap! state dissoc :drag-index :drag-over)
-                               (on-reorder (:order @state)))
+                               (on-reorder (map items (:order @state))))
               :on-drag-over  (fn [event]
                                (.preventDefault event)
                                (swap! state assoc :drag-over position)
