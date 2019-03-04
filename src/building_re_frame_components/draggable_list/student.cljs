@@ -29,6 +29,7 @@
           [:li
            {:key           index
             :draggable     true
+            :style         {:border (when (= index (:drag-index @state)) "1px solid green")}
             :on-drag-start #(swap! state assoc :drag-index index)
             :on-drag-end   #(swap! state dissoc :drag-index :drag-over)
             :on-drag-over  (fn [event]
