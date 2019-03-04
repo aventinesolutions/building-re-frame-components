@@ -34,14 +34,14 @@
             :on-drag-end   #(swap! state dissoc :drag-index :drag-over)
             :on-drag-over  (fn [event]
                              (.preventDefault event)
-                             (swap! state assoc :drag-over index)
+                             (swap! state assoc :drag-over position)
                              (swap! state update :order
                                     change-position (:drag-over @state) (:drag-index @state)))
             :on-drag-leave (fn [event]
                              (swap! state assoc :drag-over :nothing)
                              (swap! state update :order
                                     change-position (:drag-over @state) (:drag-index @state)))}
-           (get items index) position])]
+           (get items index)])]
        [:code (pr-str @state)]])))
 
 (defn ui []
