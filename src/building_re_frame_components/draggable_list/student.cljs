@@ -10,7 +10,8 @@
 (defn change-position [order position item]
   (let [order (remove #{item} order)
         head (take position order)
-        tail (drop position order)]))
+        tail (drop position order)]
+    (concat head [item] tail)))
 
 (defn draggable-list [& items]
   (let [items (vec items)
