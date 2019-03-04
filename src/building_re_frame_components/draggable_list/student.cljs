@@ -32,9 +32,7 @@
                              (swap! state update :order
                                     change-position (:drag-over @state) (:drag-index @state)))
             :on-drag-leave (fn [event]
-                             (swap! state assoc :drag-over :nothing)
-                             (swap! state update :order
-                                    change-position (:drag-over @state) (:drag-index @state)))}
+                             (swap! state assoc :drag-over :nothing))}
            (get items index)])]
        [:code (pr-str @state)]])))
 
