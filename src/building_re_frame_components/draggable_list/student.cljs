@@ -9,8 +9,8 @@
 
 (defn change-position [order position item]
   (let [order (remove #{item} order)
-        head (take position order)
-        tail (drop position order)]
+        head  (take position order)
+        tail  (drop position order)]
     (concat head [item] tail)))
 
 (defn draggable-list [& items]
@@ -38,6 +38,7 @@
 (defn ui []
   [:div
    [draggable-list
+    {:on-redorder (fn [new-order] (js/console.log new-order))}
     "ximo"
     "flip"
     "quip"
