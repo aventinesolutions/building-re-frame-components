@@ -34,8 +34,7 @@
                                (swap! state assoc :drag-over position)
                                (swap! state update :order
                                       change-position (:drag-over @state) (:drag-index @state)))
-              :on-drag-leave (fn [event]
-                               (swap! state assoc :drag-over :nothing))}
+              :on-drag-leave #(swap! state assoc :drag-over :nothing)}
              (get items index)]))]])))
 
 (defn ui []
