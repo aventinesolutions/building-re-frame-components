@@ -13,7 +13,7 @@
         tail  (drop position order)]
     (concat head [item] tail)))
 
-(defn draggable-list [& items]
+(defn draggable-list [{:keys [on-reorder] :or {on-reorder (fn [])}} & items]
   (let [items (vec items)
         state (reagent/atom {:order (range (count items))})]
     (fn []
