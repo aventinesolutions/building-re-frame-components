@@ -25,7 +25,7 @@
     (fn []
       [:div
        [:ul
-        (for [index (:order @state)]
+        (for [[index position] (map vector (:order @state) (range))]
           [:li
            {:key           index
             :draggable     true
@@ -41,7 +41,7 @@
                              (swap! state assoc :drag-over :nothing)
                              (swap! state update :order
                                     change-position (:drag-over @state) (:drag-index @state)))}
-           (get items index)])]
+           (get items index) position])]
        [:code (pr-str @state)]])))
 
 (defn ui []
