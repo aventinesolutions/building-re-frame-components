@@ -7,17 +7,7 @@
  (fn [_ _]
    {}))
 
-(defn change-position [order before item]
-  (if (empty? order)
-    (list item)
-    (let [[first & rest] order]
-      (cond
-       (= first before)
-       (cons item (remove #{item} order))
-       (= first item)
-       (change-position rest before item)
-       :else
-       (cons first (change-position rest before item))))))
+(defn change-position [order position item])
 
 (defn draggable-list [& items]
   (let [items (vec items)
