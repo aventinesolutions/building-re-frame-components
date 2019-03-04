@@ -25,7 +25,9 @@
             :draggable     true
             :style         {:border (when (= index (:drag-index @state)) "1px solid green")}
             :on-drag-start #(swap! state assoc :drag-index index)
-            :on-drag-end   #(swap! state dissoc :drag-index :drag-over)
+            :on-drag-end   (fn []
+                             (swap! state dissoc :drag-index :drag-over)
+                             (on-reorder (:order @state)))
             :on-drag-over  (fn [event]
                              (.preventDefault event)
                              (swap! state assoc :drag-over position)
@@ -38,7 +40,7 @@
 (defn ui []
   [:div
    [draggable-list
-    {:on-redorder (fn [new-order] (js/console.log new-order))}
+    {:on-reorder (fn [new-order] (js/console.log (pr-str new-order)))}
     "ximo"
     "flip"
     "quip"
